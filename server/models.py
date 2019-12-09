@@ -1,6 +1,5 @@
 from sqlalchemy_db_instance import db
 from sqlalchemy import Column, Integer, String, Binary
-import pandas as pd
 
 class Name(db.Model):
     __tablename__ = 'name_table'
@@ -28,19 +27,3 @@ def setup_database(app):
     with app.app_context():
         db.create_all()
 
-        # with app.app_context():
-        #     engine = db.get_engine()
-        #     csv_file_path = 'Names.csv'
-
-        #     # Read CSV (Names.csv) with Pandas
-        #     with open(csv_file_path, 'r') as file:
-        #             df = pd.read_csv(file)
-
-        #     # Insert to DB
-        #     df.to_sql('name_table',
-        #             con=engine,
-        #             index_label='id',
-        #             if_exists='append',
-        #             chunksize=100
-        #             )
-        
