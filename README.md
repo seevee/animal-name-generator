@@ -32,16 +32,12 @@ Installation & Running Locally
     - `pipenv install`
     - `touch .env`
     - `code .env` (Instructions below on configuring environment variables)
-    - Seed the dabase (Instructions below)
+    - `pipenv run python seeds.py`
     - `pipenv run python main.py`
 - *In the other tab:*
     - `cd client`
     - `npm install`
     - `npm run build`
-
-Seeding the Database
---------------------
-- In the server directory, run `pipenv run python seeds.py`
 
 Environment Variable Configuration
 ----------------------------------
