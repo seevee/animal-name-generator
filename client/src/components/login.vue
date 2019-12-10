@@ -1,10 +1,12 @@
 <template>
-  <div class="login-contents">
+  <div id="login">
     <template v-if="!this.$parent.loggedIn">
     <!-- if there's not currently a user logged in, allow them to log in -->
       <h1>Login</h1>
-      <p>Username:</p><input v-model="username" type="text" />
-      <p>Password:</p><input type="password" v-model="password"/>
+      <label :for="username">Username:</label>
+      <input type="text" :id="username" v-model="username" />
+      <label :for="password">Password:</label>
+      <input type="password" :id="password" v-model="password" />
       <br><br>
       <button @click="login()">Submit</button>
       <div class="error">{{ error }}</div>
@@ -56,8 +58,17 @@ export default {
 </script>
 
 <style scoped>
-.login-contents {
+#login {
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#login label {
+  margin-bottom: 0.5rem;
+}
+#login input {
+  margin-bottom: 1rem;
 }
 .error {
   font-weight: bold;

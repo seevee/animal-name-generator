@@ -1,5 +1,5 @@
 <template>
-  <div class="favorites-component">
+  <div id="favorites">
     <template v-if="this.$parent.loggedIn">
       <!-- If a user is logged in, show their favorites -->
       <h1>Favorited Names</h1>
@@ -8,19 +8,19 @@
         <div class="fav-names">
           <h2>Female Names</h2>
           <ul v-for="name in femaleNamesToDisplay" :key="name.id">
-            <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
+            <li @click="handleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
         <div class="fav-names">
           <h2>Male Names</h2>
           <ul v-for="name in maleNamesToDisplay" :key="name.id">
-            <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
+            <li @click="handleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
         <div class="fav-names">
           <h2>Gender-Neutral Names</h2>
           <ul v-for="name in gnNamesToDisplay" :key="name.id">
-            <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
+            <li @click="handleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
       </div>
@@ -31,7 +31,7 @@
       <h2>Registering and logging in gives you the ability to favorite the names you like the most and view them at any time, like this:</h2>
       <br>
       <hr>
-      <div class="favorites-container">
+      <div id="favorites-container">
         <div class="fav-names">
           <h2>Female Names</h2>
           <ul v-for="(name, index) in demoFemaleNames" :key="index">
@@ -74,11 +74,11 @@ export default {
     }
   },
   methods: {
-    determineClickOrDoubleClick(event, name){
+    handleClick(event, name){
     // if a user clicks only once during the timeout period (300 ms), do nothing
       this.clicks++ 
       if (this.clicks === 1) {
-        var self = this;
+        const self = this;
         this.timer = setTimeout(() => {
           self.clicks = 0
         }, this.delay);
@@ -93,23 +93,23 @@ export default {
     },
     getFavoritedNames() {
       axios.get('/favorited-names')
-        .then((resp) => {
+        .then(resp => {
           // sort a user's favorited names by their gender so that they can be displayed by gender more easily
-          for (var i = 0; i < resp.data.favorites.length; i++){
-            switch (resp.data.favorites[i].name_gender) {
+          resp.data.favorites.forEach(favorite => {
+            switch (favorite.name_gender) {
               case 'F':
-                this.femaleNamesToDisplay.push(resp.data.favorites[i]);
+                this.femaleNamesToDisplay.push(favorite);
                 break;
               case 'M':
-                this.maleNamesToDisplay.push(resp.data.favorites[i]);
+                this.maleNamesToDisplay.push(favorite);
                 break;
               case 'GN':
               default:
-                this.gnNamesToDisplay.push(resp.data.favorites[i]);
+                this.gnNamesToDisplay.push(favorite);
                 break;
             }
-          }
-        })
+          });
+        });
     }
   },
   mounted() {
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style scoped>
-.favorites-component {
+#favorites {
   padding-top: 20px;
 }
 h3 {
@@ -136,7 +136,7 @@ li {
 li:hover {
   font-weight: bold;
 }
-.favorites-container {
+#favorites-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;

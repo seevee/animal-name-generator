@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <nav class="nav-bar">
-    <!-- Navigation bar -->
+    <nav id="app-nav">
+      <!-- Navigation bar -->
       <template v-if="this.$route.path !== '/'">
-        <router-link class="nav-bar-elem" :to="'/'"><button>Home</button></router-link>
+        <router-link class="nav-bar-elem" :to="'/'">Home</router-link>
       </template>
       <template v-if="this.displayLoginRegisterButtons">
-        <router-link class="nav-bar-elem" :to="'/login'"><button>Log In</button></router-link>
-        <router-link class="nav-bar-elem" :to="'/register'"><button>Register</button></router-link>
+        <router-link class="nav-bar-elem" :to="'/login'">Log In</router-link>
+        <router-link class="nav-bar-elem" :to="'/register'">Register</router-link>
       </template>
-        <router-link class="nav-bar-elem" :to="'/favorites'"><button>Favorites</button></router-link>
-        <router-link class="nav-bar-elem" :to="'/advanced'"><button>Movie Names</button></router-link>
+      <router-link class="nav-bar-elem" :to="'/favorites'">Favorites</router-link>
+      <router-link class="nav-bar-elem" :to="'/advanced'">Movie Names</router-link>
       <template v-if="this.loggedIn">
         <button class="nav-bar-elem" @click="logout()">Log Out</button>
       </template>
@@ -89,7 +89,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.nav-bar {
+nav#app-nav {
   display: flex;
   border-top: 1px #2c3e50 solid;
   border-bottom: 1px #2c3e50 solid;
@@ -97,10 +97,9 @@ export default {
   justify-content: center;
   padding: 10px;
 }
-.nav-bar-elem {
+button,
+nav#app-nav .nav-bar-elem {
   margin: 0 10px;
-}
-button {
   color: #2c3e50;
   background-color: #c9dbba;
   text-transform: uppercase;
@@ -109,8 +108,12 @@ button {
   border-radius: 6px;
   display: inline-block;
   transition: all 0.3s ease 0s;
+
+  text-decoration: none;
 }
-button:hover {
+button:hover,
+nav#app-nav .nav-bar-elem:hover {
+  margin: 0 10px;
   background-color: #b2c6a1;
   color: #2c3e50;
   border-radius: 50px;

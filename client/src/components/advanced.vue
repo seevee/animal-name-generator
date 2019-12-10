@@ -1,5 +1,5 @@
 <template>
-  <div class="advanced-component">
+  <div id="advanced">
     <h1>Names From Popular Films</h1>
     <h4>Find names from a list of the top 20 currently trending films.<br>Select a movie here:</h4>
     <select v-model="selectedMovie" @change="displayMovieInfo()">
@@ -8,11 +8,11 @@
     </select>
     <br><br>
     <h1>{{ selectedMovie.title }}</h1><br>
-    <div class="selected-movie-container" v-if="selectedMovie">
-      <div class="selected-movie-poster">
+    <div id="selected-movie-container" v-if="selectedMovie">
+      <div id="selected-movie-poster">
         <img :src="posterUrl(selectedMovie)">
       </div>
-      <div class="selected-movie-info">
+      <div id="selected-movie-info">
         <h2>Character Names</h2>
         <ul>
           <li v-for="(char, index) in selectedMovieCharacterNames" :key="index">{{ char.character }}</li>
@@ -44,7 +44,7 @@ export default {
       axios.post('/trending-movie-names')
         .then((response) => {
           // serve top 20 trending movies
-          response.data.results.each(movie => {
+          response.data.results.forEach(movie => {
             //for each movie in the list, access all information about that movie (including cast and characters)
             //I have this split into two post requests because the movie API I'm using requires a more specific
             //search in order to serve cast/characters/credits from movies than the search that allows a user to find trending movies
@@ -58,8 +58,7 @@ export default {
         })
     },
     posterUrl: function(movie) {
-      var baseImageUrl = "http://image.tmdb.org/t/p/w300/";
-      return baseImageUrl + movie.poster_path;
+      return `http://image.tmdb.org/t/p/w300/${movie.poster_path}`;
     }
   },
   mounted() {
@@ -81,12 +80,12 @@ li {
   margin: 5px 10px;
   font-weight: bold;
 }
-.selected-movie-container {
+#selected-movie-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-.selected-movie-info {
+#selected-movie-info {
   margin: 0 40px;
 }
 </style>

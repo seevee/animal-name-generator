@@ -1,11 +1,15 @@
 <template>
-  <div class="register-component">
+  <div id="register">
     <template v-if="!this.$parent.loggedIn">
     <!-- if a user isn't currently logged in, allow them to register -->
       <h1>Register</h1>
-      <p>Username:</p><input v-model="username" type="text" />
-      <p>Password:</p><input type="password" v-model="password" />
-      <p>Confirm Password:</p><input type="password" v-model="confirmPassword" /><br><br>
+      <label :for="username">Username:</label>
+      <input type="text" :id="username" v-model="username" />
+      <label :for="password">Password:</label>
+      <input type="password" :id="password" v-model="password" />
+      <label :for="confirm-password">Confirm Password:</label>
+      <input type="password" :id="confirm-password" v-model="confirmPassword" />
+      <br><br>
       <div class="error-message">{{ duplicateUserErrorMessage }}</div>
       <div class="error-message">{{ passwordMatchErrorMessage }}</div>
       <div class="error-message">{{ passwordRequirementsErrorMessage }}</div>
@@ -87,8 +91,17 @@ export default {
 </script>
 
 <style scoped>
-.register-component {
+#register {
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#register label {
+  margin-bottom: 0.5rem;
+}
+#register input {
+  margin-bottom: 1rem;
 }
 .error-message{
   color: red;

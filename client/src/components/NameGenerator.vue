@@ -1,26 +1,26 @@
 <template>
-  <div class="name-generator-component">
+  <div id="name-generator">
     <h1>Animal Name Generator</h1>
     <h4><b>Click</b> on a name to set it aside. Any names set aside will be erased on page refresh.<br><b>Double-click</b> to favorite a name to view later. You must be logged in to favorite names.</h4>
-    <div class="name-generation-container">
+    <div id="name-generation-container">
     <!-- display 10 random female, male, and gender-neutral names at a time
         and pull new names on each user button click -->
       <div class="name-list-container">
         <button @click="getFemaleNames">Get Female Names</button>
         <ul>
-          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.femaleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.femaleNamesToDisplay" :key="name.id">{{ name.name }}</li>
         </ul>
       </div>
       <div class="name-list-container">
         <button @click="getMaleNames">Get Male Names</button>
         <ul>
-          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.maleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.maleNamesToDisplay" :key="name.id">{{ name.name }}</li>
         </ul>
       </div>
       <div class="name-list-container">
         <button @click="getGNNames">Get Gender-Neutral Names</button>
         <ul>
-          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.genderNeutralNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.genderNeutralNamesToDisplay" :key="name.id">{{ name.name }}</li>
         </ul>
       </div>
     </div>
@@ -89,19 +89,16 @@ export default {
     },
     nameAlreadySetAside(name){
       // before setting aside a name in the "Liked Names" section of the page, make sure they're not already set aside
-      if (!this.setAsideNames.includes(name.name)){
-        // if the name hasn't already been set aside, set it aside
-        this.setAside(name);
-        return;
+      if (this.setAsideNames.includes(name.name)){
+        return false;
       }
-      return false;
+      this.setAside(name);
     },
     handleClick(event, name){
       // if a user clicks on a name just once during the timeout period (300 ms), set it aside in the "Liked Names" section
-      console.log(event)
       this.clicks++ 
       if (this.clicks === 1) {
-        var self = this;
+        const self = this;
         this.timer = setTimeout(() => {
           self.clicks = 0
           this.nameAlreadySetAside(name);
@@ -158,7 +155,7 @@ export default {
 </script>
 
 <style scoped>
-.name-generator-component{
+#name-generator {
   padding-top: 10px;
 }
 h4 {
@@ -172,14 +169,18 @@ ul {
   padding: 0;
 }
 li {
-  color: #2c3e50;;
+  color: #2c3e50;
   margin: 5px 10px;
   font-weight: bold;
+}
+.name-list {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 .name-list:hover {
   font-weight: normal;
 }
-.name-generation-container {
+#name-generation-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
