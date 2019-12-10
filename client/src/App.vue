@@ -12,7 +12,7 @@
         <router-link class="nav-bar-elem" :to="'/favorites'"><button>Favorites</button></router-link>
         <router-link class="nav-bar-elem" :to="'/advanced'"><button>Movie Names</button></router-link>
       <div v-if="this.loggedIn">
-          <button class="nav-bar-elem" @click="logout()">Log Out</button>
+        <button class="nav-bar-elem" @click="logout()">Log Out</button>
       </div>
     </div>
     <router-view></router-view>
@@ -34,14 +34,14 @@ export default {
     login(user, pass) {
       // logs user in and redirects to home
       axios.post('/login', {username: user, password: pass})
-      .then((resp) => {
-        if (resp.data.success == false){
-          this.$router.go();
-        } else {
-          this.loggedIn = true;
-          this.$router.push('/');
-        }
-      });
+        .then((resp) => {
+          if (resp.data.success == false){
+            this.$router.go();
+          } else {
+            this.loggedIn = true;
+            this.$router.push('/');
+          }
+        });
     },
     logout(){
       // logs user out and redirects to home or refreshes if already on homepage
@@ -57,21 +57,21 @@ export default {
       /* hits backend and checks to see if a user is in session - adjusts this.loggedIn accordingly
       this ensures that the correct navbar buttons are displayed at all times */
       let promise = axios.post('/users')
-      .then((resp) => {
-        if (resp.data.success == false){
-          this.loggedIn = false;
-          return false;
-        }
-        this.userInSession = resp.data.userInSession;
-        this.loggedIn = true;
-        return true;
-      })
+        .then((resp) => {
+          if (resp.data.success == false){
+            this.loggedIn = false;
+            return false;
+          }
+          this.userInSession = resp.data.userInSession;
+          this.loggedIn = true;
+          return true;
+        })
       // these lines ensure that the promise resolves before adjusting the value of this.loggedIn (accounts for asynch)
       let result = await promise;
       return result;
     }
   },
-    computed: {
+  computed: {
     displayLoginRegisterButtons(){
       // determines if login or register buttons should be shown based on current path and this.loggedIn status
       if (this.$route.path != '/login' && !this.loggedIn){
