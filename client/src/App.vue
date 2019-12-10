@@ -2,7 +2,7 @@
   <div id="app">
     <nav class="nav-bar">
     <!-- Navigation bar -->
-      <template v-if="this.$route.path != '/'">
+      <template v-if="this.$route.path !== '/'">
         <router-link class="nav-bar-elem" :to="'/'"><button>Home</button></router-link>
       </template>
       <template v-if="this.displayLoginRegisterButtons">
@@ -69,7 +69,7 @@ export default {
   computed: {
     displayLoginRegisterButtons(){
       // determines if login or register buttons should be shown based on current path and this.loggedIn status
-      return this.$route.path != '/login' && !this.loggedIn;
+      return this.$route.path !== '/login' && !this.loggedIn;
     }
   },
   mounted() {
