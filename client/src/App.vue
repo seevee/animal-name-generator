@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="nav-bar">
+    <nav class="nav-bar">
     <!-- Navigation bar -->
       <template v-if="this.$route.path != '/'">
         <router-link class="nav-bar-elem" :to="'/'"><button>Home</button></router-link>
@@ -14,7 +14,7 @@
       <template v-if="this.loggedIn">
         <button class="nav-bar-elem" @click="logout()">Log Out</button>
       </template>
-    </div>
+    </nav>
     <router-view></router-view>
   </div>
 </template>
