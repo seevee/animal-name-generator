@@ -29,7 +29,6 @@ export default {
   name: 'advanced',
   data() {
     return {
-      movieId: '',
       movieCharacters: [],
       moviesResultsObjects: [],
       selectedMovie: '',
