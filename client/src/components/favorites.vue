@@ -7,19 +7,19 @@
       <div class="favorites-container">
         <div class="fav-names">
           <h2>Female Names</h2>
-          <ul  v-for="name in femaleNamesToDisplay" :key="name.id">
+          <ul v-for="name in femaleNamesToDisplay" :key="name.id">
             <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
         <div class="fav-names">
           <h2>Male Names</h2>
-          <ul  v-for="name in maleNamesToDisplay" :key="name.id">
+          <ul v-for="name in maleNamesToDisplay" :key="name.id">
             <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
         <div class="fav-names">
           <h2>Gender-Neutral Names</h2>
-          <ul  v-for="name in gnNamesToDisplay" :key="name.id">
+          <ul v-for="name in gnNamesToDisplay" :key="name.id">
             <li @click="determineClickOrDoubleClick($event, name)">{{ name.favorited_name }}</li>
           </ul>
         </div>
