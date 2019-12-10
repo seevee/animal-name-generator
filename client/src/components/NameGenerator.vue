@@ -8,19 +8,19 @@
       <div class="name-list-container">
         <button @click="getFemaleNames">Get Female Names</button>
         <ul>
-          <li class="name-list" @click="determineClickOrDoubleClick($event, name)" v-for="name in this.femaleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.femaleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
         </ul>
       </div>
       <div class="name-list-container">
         <button @click="getMaleNames">Get Male Names</button>
         <ul>
-          <li class="name-list" @click="determineClickOrDoubleClick($event, name)" v-for="name in this.maleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.maleNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
         </ul>
       </div>
       <div class="name-list-container">
         <button @click="getGNNames">Get Gender-Neutral Names</button>
         <ul>
-          <li class="name-list" @click="determineClickOrDoubleClick($event, name)" v-for="name in this.genderNeutralNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
+          <li class="name-list" @click="handleClick($event, name)" v-for="name in this.genderNeutralNamesToDisplay" :key="name.id">{{ name.name }}<br></li>
         </ul>
       </div>
     </div>
@@ -78,7 +78,7 @@ export default {
       this.duplicateNameErrorMessage = '';
       axios.post('/duplicate-name-test', { name: this.inputValue, gender: this.addNameGender })
         .then(resp => {
-          if (resp.data.does_the_name_exist.length == 0){
+          if (resp.data.does_the_name_exist.length === 0){
           // if the response from the database has a length of 0, the name doesn't exist and should be added
             this.addName();
           } else {
@@ -96,8 +96,9 @@ export default {
       }
       return false;
     },
-    determineClickOrDoubleClick(event, name){
+    handleClick(event, name){
       // if a user clicks on a name just once during the timeout period (300 ms), set it aside in the "Liked Names" section
+      console.log(event)
       this.clicks++ 
       if (this.clicks === 1) {
         var self = this;

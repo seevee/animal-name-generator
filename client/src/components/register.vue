@@ -1,6 +1,6 @@
 <template>
   <div class="register-component">
-    <template v-if="this.$parent.loggedIn == false">
+    <template v-if="!this.$parent.loggedIn">
     <!-- if a user isn't currently logged in, allow them to register -->
       <h1>Register</h1>
       <p>Username:</p><input v-model="username" type="text" />
@@ -48,7 +48,7 @@ export default {
         this.passwordRequirementsErrorMessage = "Passwords must be at least 5 characters long and include at least one capital letter and one special character";
         return;
       }
-      if (this.password != this.confirmPassword){
+      if (this.password !== this.confirmPassword){
         // if the password and confirmed password don't match, display error
         this.passwordMatchErrorMessage = "Those passwords don't match. Please re-enter.";
         return;
@@ -60,11 +60,11 @@ export default {
       // before adding a new user to DB, make sure that username isn't already taken
       axios.post('/duplicate-user-test', { username: this.username })
         .then(resp => {
-          if (resp.data.does_the_user_exist.length == 0){
-          // if the length of response is 0, the user doesn't exist - test the password validity
+          if (resp.data.does_the_user_exist.length === 0){
+            // if the length of response is 0, the user doesn't exist - test the password validity
             this.passwordMeetsRequirements();
           } else {
-          // otherwise, display an error
+            // otherwise, display an error
             this.duplicateUserErrorMessage = "Sorry, that username already exists."
             this.username = '';
             this.password = '';

@@ -29,7 +29,6 @@ export default {
   name: 'advanced',
   data() {
     return {
-      trendingMovies: '',
       movieId: '',
       movieCharacters: [],
       moviesResultsObjects: [],
@@ -44,21 +43,18 @@ export default {
     discoverMovies: function () {
       axios.post('/trending-movie-names')
         .then((response) => {
-          //serve top 20 trending movies and put them in a list
-          this.trendingMovies = response.data.results;
-          for (var i = 0; i < this.trendingMovies.length; i++){
-            //grab the ID of each movie in the list
-            this.movieId = this.trendingMovies[i].id;
+          // serve top 20 trending movies
+          response.data.results.each(movie => {
             //for each movie in the list, access all information about that movie (including cast and characters)
             //I have this split into two post requests because the movie API I'm using requires a more specific
             //search in order to serve cast/characters/credits from movies than the search that allows a user to find trending movies
             //so first one must find trending movies, then search the ID of each of those movies more specifically to access character names
-            axios.post('/movie-credits', {movie_id: this.movieId})
+            axios.post('/movie-credits', {movie_id: movie.id})
               .then((response) => {
                 //store more specific movie information on each movie to be referenced later
                 this.moviesResultsObjects.push(response.data);
               });
-          }
+          });
         })
     },
     posterUrl: function(movie) {

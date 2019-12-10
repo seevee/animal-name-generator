@@ -35,12 +35,12 @@ export default {
       // logs user in and redirects to home
       axios.post('/login', {username: user, password: pass})
         .then((resp) => {
-          if (resp.data.success == false){
+          if (!resp.data.success){
             this.$router.go();
-          } else {
-            this.loggedIn = true;
-            this.$router.push('/');
+            return;
           }
+          this.loggedIn = true;
+          this.$router.push('/');
         });
     },
     logout(){
@@ -58,27 +58,18 @@ export default {
       this ensures that the correct navbar buttons are displayed at all times */
       let promise = axios.post('/users')
         .then((resp) => {
-          if (resp.data.success == false){
-            this.loggedIn = false;
-            return false;
-          }
-          this.userInSession = resp.data.userInSession;
-          this.loggedIn = true;
-          return true;
+          this.loggedIn = resp.data.success;
+          this.userInSession = resp.data.userInSession || this.userInSession;
+          return resp.data.success;
         })
       // these lines ensure that the promise resolves before adjusting the value of this.loggedIn (accounts for asynch)
-      let result = await promise;
-      return result;
+      return await promise;
     }
   },
   computed: {
     displayLoginRegisterButtons(){
       // determines if login or register buttons should be shown based on current path and this.loggedIn status
-      if (this.$route.path != '/login' && !this.loggedIn){
-        return true;
-      } else {
-        return false;
-      }
+      return this.$route.path != '/login' && !this.loggedIn;
     }
   },
   mounted() {
