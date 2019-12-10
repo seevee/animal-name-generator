@@ -115,10 +115,10 @@ export default {
 
 <style scoped>
 .favorites-component {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 h3 {
-    font-weight: normal;
+  font-weight: normal;
 }
 ul {
   list-style-type: none;
@@ -129,14 +129,14 @@ li {
   display: inline-block;
 }
 li:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
 .favorites-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .fav-names {
-    width: 18em;
+  width: 18em;
 }
 </style>
