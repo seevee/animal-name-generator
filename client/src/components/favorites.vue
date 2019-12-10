@@ -96,12 +96,17 @@ export default {
         .then((resp) => {
           // sort a user's favorited names by their gender so that they can be displayed by gender more easily
           for (var i = 0; i < resp.data.favorites.length; i++){
-            if (resp.data.favorites[i].name_gender == 'F'){
-              this.femaleNamesToDisplay.push(resp.data.favorites[i]);
-            } else if (resp.data.favorites[i].name_gender == 'M'){
-              this.maleNamesToDisplay.push(resp.data.favorites[i]);
-            } else if (resp.data.favorites[i].name_gender == 'GN'){
-              this.gnNamesToDisplay.push(resp.data.favorites[i]);
+            switch (resp.data.favorites[i].name_gender) {
+              case 'F':
+                this.femaleNamesToDisplay.push(resp.data.favorites[i]);
+                break;
+              case 'M':
+                this.maleNamesToDisplay.push(resp.data.favorites[i]);
+                break;
+              case 'GN':
+              default:
+                this.gnNamesToDisplay.push(resp.data.favorites[i]);
+                break;
             }
           }
         })
